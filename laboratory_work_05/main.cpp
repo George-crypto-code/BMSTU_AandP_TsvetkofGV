@@ -30,10 +30,10 @@ void print(std::vector<std::vector<int>> matrix)
     int max_width = std::to_string(max).length();
 
     std::cout << "[" << std::endl;
-    for (size_t i = 0; i < matrix.size(); ++i) 
+    for (size i = 0; i < matrix.size(); ++i) 
     {
         std::cout << " [";
-        for (size_t j = 0; j < matrix[i].size(); ++j) 
+        for (size j = 0; j < matrix[i].size(); ++j) 
         {
             std::cout << std::right << std::setw(max_width) << matrix[i][j];
             if (j < matrix[i].size() - 1) std::cout << " ";
