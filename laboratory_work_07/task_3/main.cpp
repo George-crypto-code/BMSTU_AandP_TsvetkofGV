@@ -1,0 +1,61 @@
+#include <chrono>
+#include <iostream>
+#include <random>
+#include <utility>
+
+
+int partitionLomuto(int* a, int l, int r)
+{
+    int pivot = a[r];
+    int i = l - 1;
+    for (int j = l; j < r; ++j)
+        if (a[j] <= pivot)
+            std::swap(a[++i], a[j]);
+    std::swap(a[i + 1], a[r]);
+    return i + 1;
+}
+
+
+void quickSort(int* a, int l, int r)
+{
+    if (l >= r) return;
+    int p = partitionLomuto(a, l, r);
+    quickSort(a, l, p - 1);
+    quickSort(a, p + 1, r);
+}
+
+void selectionSort(int* a, int n)
+{
+    for (int i = 0; i < n - 1; ++i)
+    {
+        int mn = i;
+        for (int j = i + 1; j < n; ++j)
+            if (a[j] < a[mn]) mn = j;
+        std::swap(a[i], a[mn]);
+    }
+}
+
+
+int main()
+{
+    const int N = 20000;
+    int* a = new int[N];
+    std::mt19937 gen(42);
+    std::uniform_int_distribution<int> dist(0, 1000000);
+
+    for (int n : {1000, 5000, 20000})
+    {
+        for (int i = 0; i < n; ++i)
+            a[i] = dist(gen);
+
+        auto t1 = std::chrono::high_resolution_clock::now();
+        quickSort(a, 0, n - 1);
+        auto t2 = std::chrono::high_resolution_clock::now();
+
+        std::cout << "quickSort N=" << n << ": "
+                  << std::chrono::duration<double, std::milli>(t2 - t1).count()
+                  << " ms" << std::endl;
+    }
+    delete[] a;
+    return 0;
+}
