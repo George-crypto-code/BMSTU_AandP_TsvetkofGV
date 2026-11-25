@@ -5,11 +5,9 @@
 #include <algorithm>
 
 
-void printNumpyStyle(const std::vector<int>& vec) 
-{
-    if (vec.size() < 8) 
-    {
-        for (int x : vec) std::cout << x << ' ';
+void printNumpyStyle(const std::vector<int> &vec) {
+    if (vec.size() < 8) {
+        for (int x: vec) std::cout << x << ' ';
         std::cout << std::endl;
         return;
     }
@@ -22,13 +20,12 @@ void printNumpyStyle(const std::vector<int>& vec)
 }
 
 
-std::vector<int> mergeSort(const std::vector<int>& array) 
-{
+std::vector<int> mergeSort(const std::vector<int> &array) {
     size_t size = array.size();
     if (size <= 1) return array;
 
     size_t mid = size / 2;
-    
+
     std::vector<int> first_part(array.begin(), array.begin() + mid);
     std::vector<int> second_part(array.begin() + mid, array.end());
 
@@ -41,15 +38,11 @@ std::vector<int> mergeSort(const std::vector<int>& array)
     size_t i = 0;
     size_t j = 0;
 
-    while (i < sorted_first.size() && j < sorted_second.size()) 
-    {
-        if (sorted_first[i] <= sorted_second[j]) 
-        {
+    while (i < sorted_first.size() && j < sorted_second.size()) {
+        if (sorted_first[i] <= sorted_second[j]) {
             sorted_array.push_back(sorted_first[i]);
             i++;
-        } 
-        else 
-        {
+        } else {
             sorted_array.push_back(sorted_second[j]);
             j++;
         }
@@ -57,7 +50,7 @@ std::vector<int> mergeSort(const std::vector<int>& array)
 
     while (i < sorted_first.size())
         sorted_array.push_back(sorted_first[i++]);
-    
+
     while (j < sorted_second.size())
         sorted_array.push_back(sorted_second[j++]);
 
@@ -65,8 +58,7 @@ std::vector<int> mergeSort(const std::vector<int>& array)
 }
 
 
-int partitionLomuto(std::vector<int>& a, int l, int r) 
-{
+int partitionLomuto(std::vector<int> &a, int l, int r) {
     int pivot = a[r];
     int i = l - 1;
     for (int j = l; j < r; ++j)
@@ -76,8 +68,7 @@ int partitionLomuto(std::vector<int>& a, int l, int r)
 }
 
 
-void quickSort(std::vector<int>& a, int l, int r) 
-{
+void quickSort(std::vector<int> &a, int l, int r) {
     if (l >= r) return;
     int p = partitionLomuto(a, l, r);
     quickSort(a, l, p - 1);
@@ -85,12 +76,11 @@ void quickSort(std::vector<int>& a, int l, int r)
 }
 
 
-int main() 
-{
+int main() {
     auto seed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
     std::mt19937 gen(seed);
     std::uniform_int_distribution<int> dist(0, 1000000000);
-    
+
     const int size = 1000177;
     std::vector<int> base_array;
     base_array.reserve(size);

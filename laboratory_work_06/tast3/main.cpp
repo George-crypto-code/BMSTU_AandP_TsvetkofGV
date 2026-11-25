@@ -32,10 +32,10 @@ void print(std::vector<std::vector<int>> matrix, std::ofstream& file)
     int max_width = std::to_string(max).length();
 
     file << "[" << std::endl;
-    for (size i = 0; i < matrix.size(); ++i) 
+    for (int i = 0; i < matrix.size(); ++i)
     {
         file << " [";
-        for (size j = 0; j < matrix[i].size(); ++j) 
+        for (int j = 0; j < matrix[i].size(); ++j)
         {
             file << std::right << std::setw(max_width) << matrix[i][j];
             if (j < matrix[i].size() - 1) file << " ";
