@@ -5,7 +5,7 @@
 #include <algorithm>
 
 
-void printNumpyStyle(const std::vector<int> &vec) {
+static void printNumpyStyle(const std::vector<int> &vec) {
     if (vec.size() < 8) {
         for (int x: vec) std::cout << x << ' ';
         std::cout << std::endl;
@@ -20,7 +20,7 @@ void printNumpyStyle(const std::vector<int> &vec) {
 }
 
 
-std::vector<int> mergeSort(const std::vector<int> &array) {
+static std::vector<int> mergeSort(const std::vector<int> &array) {
     size_t size = array.size();
     if (size <= 1) return array;
 
@@ -58,8 +58,8 @@ std::vector<int> mergeSort(const std::vector<int> &array) {
 }
 
 
-int partitionLomuto(std::vector<int> &a, int l, int r) {
-    int pivot = a[r];
+static int partitionLomuto(std::vector<int> &a, const int l, const int r) {
+    const int pivot = a[r];
     int i = l - 1;
     for (int j = l; j < r; ++j)
         if (a[j] <= pivot) std::swap(a[++i], a[j]);
@@ -68,20 +68,20 @@ int partitionLomuto(std::vector<int> &a, int l, int r) {
 }
 
 
-void quickSort(std::vector<int> &a, int l, int r) {
+static void quickSort(std::vector<int> &a, const int l, const int r) {
     if (l >= r) return;
-    int p = partitionLomuto(a, l, r);
+    const int p = partitionLomuto(a, l, r);
     quickSort(a, l, p - 1);
     quickSort(a, p + 1, r);
 }
 
 
 int main() {
-    auto seed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+    const auto seed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
     std::mt19937 gen(seed);
-    std::uniform_int_distribution<int> dist(0, 1000000000);
+    std::uniform_int_distribution dist(0, 1000000000);
 
-    const int size = 1000177;
+    constexpr int size = 1000177;
     std::vector<int> base_array;
     base_array.reserve(size);
     for (int i = 0; i < size; i++) base_array.push_back(dist(gen));
@@ -90,16 +90,16 @@ int main() {
     printNumpyStyle(base_array);
 
     std::vector<int> array_merge = base_array;
-    auto start_merge = std::chrono::high_resolution_clock::now();
+    const auto start_merge = std::chrono::high_resolution_clock::now();
     array_merge = mergeSort(array_merge);
-    auto end_merge = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> elapsed_merge = end_merge - start_merge;
+    const auto end_merge = std::chrono::high_resolution_clock::now();
+    const std::chrono::duration<double> elapsed_merge = end_merge - start_merge;
 
     std::vector<int> array_quick = base_array;
-    auto start_quick = std::chrono::high_resolution_clock::now();
+    const auto start_quick = std::chrono::high_resolution_clock::now();
     quickSort(array_quick, 0, size - 1);
-    auto end_quick = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> elapsed_quick = end_quick - start_quick;
+    const auto end_quick = std::chrono::high_resolution_clock::now();
+    const std::chrono::duration<double> elapsed_quick = end_quick - start_quick;
 
     std::cout << "MergeSort result:  ";
     printNumpyStyle(array_merge);

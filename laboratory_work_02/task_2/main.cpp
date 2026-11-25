@@ -2,8 +2,7 @@
 #include <cmath>
 
 
-bool f(double x, double y, double r)
-{
+static bool f(const double x, const double y, const double r) {
     if (x >= 0 && y >= 0)
         if (std::pow(x, 2) + std::pow(y, 2) <= r * r)
             return true;
@@ -24,8 +23,7 @@ bool f(double x, double y, double r)
 }
 
 
-int main()
-{
+int main() {
     double x, y, r;
     std::cout << "Enter radius: ";
     std::cin >> r;
@@ -34,8 +32,8 @@ int main()
     std::cout << "Enter y of point: ";
     std::cin >> y;
 
-    std::cout << "Point (" << x << "; " << y << ") is " << 
-    ((f(x, y, r)) ? "" : "not ") << "belong in our field" << std::endl;
-    
+    std::cout << "Point (" << x << "; " << y << ") is " <<
+            (f(x, y, r) ? "" : "not ") << "belong in our field" << std::endl;
+
     return 0;
 }

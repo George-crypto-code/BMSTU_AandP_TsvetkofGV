@@ -1,28 +1,24 @@
 #include <iostream>
 
 
-long long factorial(int n)
-{
+static long long factorial(const int n) {
     if (n <= 1)
         return 1;
     return n * factorial(n - 1);
 }
 
 
-int digitSum(long long x)
-{
+static long long digitSum(const long long x) {
     if (x < 10)
         return x;
     return x % 10 + digitSum(x / 10);
 }
 
 
-int main()
-{
+int main() {
     int n;
     std::cout << "Enter n: ";
-    if (!(std::cin >> n) || n < 0)
-    {
+    if (!(std::cin >> n) || n < 0) {
         std::cout << "Incorrect input!" << std::endl;
         return 1;
     }
@@ -30,8 +26,7 @@ int main()
 
     long long x;
     std::cout << "Enter some number: ";
-    if (!(std::cin >> x) || x <= 0)
-    {
+    if (!(std::cin >> x) || x <= 0) {
         std::cout << "Incorrect input!" << std::endl;
         return 1;
     }

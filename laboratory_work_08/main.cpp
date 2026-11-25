@@ -278,10 +278,47 @@ static void operationsTest() {
 }
 
 
+static long long digitSum(const long long x) {
+    if (x < 10)
+        return x;
+    return x % 10 + digitSum(x / 10);
+}
+
+
+static bool compare(const long long current, const long long next) {
+    return current > next;
+}
+
+
+static bool digit(const long long current, const long long next) {
+    if (digitSum(current) > digitSum(next)) return true;
+    if (digitSum(current) == digitSum(next)) return current > next;
+    return false;
+}
+
+
+template<typename Compare>
+
+static void bubbleSortKey(std::vector<int> &src, Compare key) {
+    const auto size = src.size();
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size - 1 - i; j++) {
+            if (key(src[j], src[j + 1]))
+                std::swap(src[j], src[j + 1]);
+        }
+    }
+}
+
+
 int main() {
-    testFullRandomArray();
-    testHalfRandomArray();
-    testBitRandomArray();
-    operationsTest();
+    // testFullRandomArray();
+    // testHalfRandomArray();
+    // testBitRandomArray();
+    // operationsTest();
+    constexpr int n = 5;
+    std::vector src = {11, 2, 15, 20, 100};
+    bubbleSortKey(src, digit);
+    for (int i = 0; i < n; i++) std::cout << src[i] << " ";
+    std::cout << std::endl;
     return 0;
 }

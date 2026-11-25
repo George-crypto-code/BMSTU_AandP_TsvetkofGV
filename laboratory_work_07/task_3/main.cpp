@@ -4,9 +4,8 @@
 #include <utility>
 
 
-int partitionLomuto(int* a, int l, int r)
-{
-    int pivot = a[r];
+static int partitionLomuto(int *a, const int l, const int r) {
+    const int pivot = a[r];
     int i = l - 1;
     for (int j = l; j < r; ++j)
         if (a[j] <= pivot)
@@ -16,35 +15,21 @@ int partitionLomuto(int* a, int l, int r)
 }
 
 
-void quickSort(int* a, int l, int r)
-{
+static void quickSort(int *a, const int l, const int r) {
     if (l >= r) return;
-    int p = partitionLomuto(a, l, r);
+    const int p = partitionLomuto(a, l, r);
     quickSort(a, l, p - 1);
     quickSort(a, p + 1, r);
 }
 
-void selectionSort(int* a, int n)
-{
-    for (int i = 0; i < n - 1; ++i)
-    {
-        int mn = i;
-        for (int j = i + 1; j < n; ++j)
-            if (a[j] < a[mn]) mn = j;
-        std::swap(a[i], a[mn]);
-    }
-}
 
+int main() {
+    constexpr int N = 20000;
+    const auto a = new int[N];
+    std::mt19937 gen(time(nullptr));
+    std::uniform_int_distribution dist(0, 1000000);
 
-int main()
-{
-    const int N = 20000;
-    int* a = new int[N];
-    std::mt19937 gen(42);
-    std::uniform_int_distribution<int> dist(0, 1000000);
-
-    for (int n : {1000, 5000, 20000})
-    {
+    for (const int n: {1000, 5000, 20000}) {
         for (int i = 0; i < n; ++i)
             a[i] = dist(gen);
 
@@ -53,8 +38,8 @@ int main()
         auto t2 = std::chrono::high_resolution_clock::now();
 
         std::cout << "quickSort N=" << n << ": "
-                  << std::chrono::duration<double, std::milli>(t2 - t1).count()
-                  << " ms" << std::endl;
+                << std::chrono::duration<double, std::milli>(t2 - t1).count()
+                << " ms" << std::endl;
     }
     delete[] a;
     return 0;
